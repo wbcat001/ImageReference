@@ -1,9 +1,9 @@
-import { Image } from "../Model/ImageData";
+import { ImageData } from "../Model/ImageData";
 import axios from "axios";
 import dotenv from "dotenv";
 
 export class ImageRetriever{
-	private images: Image[] 
+	private images: ImageData[] 
     private UNSPLASH_API_KEY: string;
 	
 	constructor(){
@@ -17,7 +17,7 @@ export class ImageRetriever{
         }
 	}
 	
-	public async retrieveImages(query: string): Promise<Image[]> {
+	public async retrieveImages(query: string): Promise<ImageData[]> {
         try{
             if (query == ""){query = "cat"}
             const response = await axios.get(`https://api.unsplash.com/search/photos?query=${query}&per_page=20&client_id=${this.UNSPLASH_API_KEY}`);

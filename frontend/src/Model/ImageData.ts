@@ -1,5 +1,5 @@
 
-export type Image = {
+export type ImageData = {
     url: string;
 
 }
