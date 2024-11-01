@@ -7,7 +7,7 @@ export class UserController{
 
     static async getUsers(req:Request, res:Response): Promise<void>{
         try{
-            const users = await prisma.users.findMany();
+            const users = await prisma.user.findMany();
             res.status(200).json(users);
         }catch(error){
             console.error(error);
@@ -19,7 +19,7 @@ export class UserController{
         try{
 
             const {id} = req.params;
-            const user = await prisma.users.findUnique({
+            const user = await prisma.user.findUnique({
                 where: {id},
             })
             res.status(200).json(user);
@@ -28,4 +28,18 @@ export class UserController{
             res.status(500).json({message: "Failed to get user"})
         }
     }
+
+    // update user data: put
+    static async updateUser(req:Request, res:Response): Promise<void>{
+        res.status(200).json({});
+    }
+
+    // Delete user data: delete
+
+    // Save Post: post
+
+    // Get Profile Images: get
+
+    // get notification number: get
 }
+

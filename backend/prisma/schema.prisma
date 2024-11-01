@@ -19,10 +19,23 @@ model Posts {
   body String
 }
 
-model Users {
+
+model Image{
+  id String  @id @default(uuid()) @map("_id") 
+  user User @relation(fields: [userId], references: [id])
+  url String
+  userId String @unique 
+  imageId String @unique
+  createdAt DateTime @default(now())
+
+  @@unique([userId, imageId])
+}
+
+model User {
   id String @id @default(uuid()) 
   email String @unique
   userName String @unique
 	password String
 	createdAt DateTime @default(now())
+  images Image[]
 }

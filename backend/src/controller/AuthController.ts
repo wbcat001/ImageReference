@@ -26,7 +26,7 @@ export class AuthController {
             const {userName, password} = req.body;
             
             // Check User exist
-            const user = await prisma.users.findUnique({
+            const user = await prisma.user.findUnique({
                 where: {userName}
             })
             if(!user) {throw new Error("Invalid Credentials!");}
@@ -71,12 +71,12 @@ export class AuthController {
         try{
 
             const {userName, email, password} = req.body;
-
+            console.log(password)
             const hashedPassword = await bcrypt.hash(password, 10);
             console.log(hashedPassword);
 
             // Create User, save to DB
-            const newUser = await prisma.users.create({
+            const newUser = await prisma.user.create({
                 data: {
                     userName:userName,
                     email: email,
