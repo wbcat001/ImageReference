@@ -123,7 +123,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     try{
       const options = {
         method: "POST",
-        url: "http://localhost:3001/api/auth/register",
+        url: "/auth/register",
         headers: { "Content-Type": "application/json" },
         data: {
           userName: data.get('name'),

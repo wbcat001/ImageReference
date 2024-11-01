@@ -24,7 +24,7 @@ const SearchView: React.FC = () => {
         try{
             const options = {
                 method: "POST",
-                url: "http://localhost:3001/api/image",
+                url: "/image",
                 headers: { "Content-Type": "application/json" },
                 data: {
                     query: word,
