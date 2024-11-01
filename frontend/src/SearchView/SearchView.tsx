@@ -20,7 +20,7 @@ const SearchView: React.FC = () => {
 
     const onHandleEnter = async () =>{
         console.log("enter", word);
-        // setImages(await imageRetriever.retrieveImages(word));
+        
         try{
             const options = {
                 method: "POST",
@@ -46,6 +46,7 @@ const SearchView: React.FC = () => {
             console.log("images", images);
         }catch(error){
             console.error("Failed to get images", error);
+            setImages(await imageRetriever.retrieveImages(word));
         }
     }
     return (
