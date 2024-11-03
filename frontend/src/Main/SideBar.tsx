@@ -26,6 +26,7 @@ const SideBar:React.FC =  () => {
         {link: "/", text: "Home"},
         {link: "/Search", text: "Search"},
         {link: "/SignIn", text: "Login"},
+        {link: "/MyList", text: "MyList"}
     ]
 
     const appTheme = useTheme();

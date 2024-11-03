@@ -74,7 +74,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [open, setOpen] = React.useState(false);
 
   const navigate = useNavigate();
-  const {updateUser, getUser} = useContext(AuthContext)
+  const {currentUser, updateUser, getUser} = useContext(AuthContext)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -100,7 +100,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     try{
       
       const options = {
-        withCredentials: true,
+        
         method: "POST",
         url: "/auth/login",
        
@@ -115,9 +115,11 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
      
 
       // update user
+      console.log("login response", response.data)
       updateUser(response.data);
-      getUser();
       
+      getUser();
+      console.log("current user in signinview", currentUser)
 
     }catch(error){
       console.error(error);

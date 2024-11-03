@@ -8,6 +8,6 @@ const apiRequest = axios.create({
     headers: { "Content-Type": "application/json" },
 })
 
-console.log("apiURL: ",apiBaseURL)
+console.log("apiURL: ", apiBaseURL)
 
 export default apiRequest;

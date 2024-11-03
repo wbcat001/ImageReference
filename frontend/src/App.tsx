@@ -13,28 +13,10 @@ import SearchView from './SearchView/SearchView';
 import { Paper } from '@mui/material';
 import SignIn from './SignIn/SingIn';
 import SignUp from './SignUp/SignUp';
-const SampleImages: ImageData[] = [
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1525097487452-6278ff080c31"},
-  {url: "https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee"},
-  {url: "https://images.unsplash.com/photo-1481277542470-605612bd2d61"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1481277542470-605612bd2d61"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3"},
-  {url: "https://images.unsplash.com/photo-1481277542470-605612bd2d61"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3"},
-  {url: "https://images.unsplash.com/photo-1481277542470-605612bd2d61"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3"},
-  {url: "https://images.unsplash.com/photo-1481277542470-605612bd2d61"},
-  {url: "https://images.unsplash.com/photo-1549388604-817d15aa0110"},
-  {url: "https://images.unsplash.com/photo-1563298723-dcfebaa392e3"},
-]
+import MyListView from "./MyListView/MyListView";
+import { AuthContextProvider } from './Context/AuthContext';
+
+import HomeView from './HomeView/Homeview';
 
 function App() {
   
@@ -80,6 +62,7 @@ function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
       <BrowserRouter>
+      <AuthContextProvider>
       <Grid container spacing={0}>
       <Grid item xs={2} sx={{ position: 'sticky', top: 0, height: '100vh' }}>
         <Paper sx={{ height: '100%', overflow: 'auto' , backgroundColor: "background.paper"}}>
@@ -88,14 +71,16 @@ function App() {
         </Grid>
         <Grid item xs={10}>
           <Routes>
-            <Route path="/" element={<MasonryImageList images={SampleImages}/>} />
+            <Route path="/" element={<HomeView/>} />
             <Route path="/Search" element={<SearchView/>} />
             <Route path="/SignUp" element={<SignUp/>}/>
             <Route path="/SignIn" element={<SignIn/>}/>
+            <Route path="/MyList" element={<MyListView/>}/>
             
           </Routes>
         </Grid>
       </Grid>
+      </AuthContextProvider>
       </BrowserRouter>
       </ThemeProvider>
     </div>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useContext, useRef} from "react";
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -9,6 +9,60 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import { ImageData } from '../Model/ImageData';
 import { CircularProgress } from "@mui/material";
+import CardActions from "@mui/material/CardActions";
+
+import Button from '@mui/material/Button';
+
+import { AuthContext } from "../Context/AuthContext";
+import apiRequest from "../lib/apiRequest";
+import { useNavigate } from "react-router-dom";
+import { RefObject } from "react";
+const useWindowWidth = () => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  useEffect(() =>{
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resizee", handleResize);
+
+    return () =>{
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  return width;
+}
+
+type DOMRectProperty = keyof Omit<DOMRect, 'toJSON'>;
+
+const useGetElementProperty = <T extends HTMLElement>(elementRef: RefObject<T>) =>{
+  const [width, setWidth] = useState<number>(window.innerWidth);
+
+  const getProperty = (targetProperty: DOMRectProperty): number =>{
+    const clientRect = elementRef.current?.getBoundingClientRect();
+      if (clientRect){
+        return clientRect[targetProperty];
+      }
+      return 0;
+  }
+
+  useEffect(() =>{
+
+    setWidth(getProperty("width"));
+    const handleResize = () => {
+      console.log("width", getProperty("width"));
+      
+      setWidth(getProperty("width"));
+    }
+    window.addEventListener("resize", handleResize);
+
+    return () =>{
+      window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  return width;
+}
+
 
 interface ImageListProps{
     images: ImageData[]
@@ -17,41 +71,50 @@ interface ImageListProps{
 
 const MasonryImageList: React.FC<ImageListProps> = ({images}) =>  {
     const appTheme = useTheme();
+    const targetRef = useRef(null);
+    const width = useGetElementProperty(targetRef);
+    
+    const [col, setCol] = useState<number>(3);
+
     return (
       <ThemeProvider theme={appTheme}>
-        <Box>
-          <ImageList variant="masonry" cols={3} gap={8}>
+        <div ref={targetRef}>
+        <Box >
+          <ImageList variant="masonry" cols={col} gap={10}>
             {images.map((image) => (
               <ImageListItem key={image.url}>
-                <Card sx={{ width: 350 , backgroundColor: "background.default", boxShadow: 4}}>
-                {/* <CardMedia
-                    sx={{  width: 350, height: 100}}
-                    image={image.url}
-                    title="image"
-                  /> */}
-                    <AdjustedCardMedia width={350} imageUrl={image.url}/>
-                </Card>
+                
+                
+                    <AdjustedCardMedia width={ width/col - 10} image={image}/>
+               
               </ImageListItem>
             ))}
           </ImageList>
         </Box>
+        </div>
       </ThemeProvider>
     )
 }
 
+
+
+
+
 interface CardMediaProps{
-  imageUrl: string;
+  image: ImageData;
   width: number;
 }
 
-const AdjustedCardMedia: React.FC<CardMediaProps> = ({imageUrl, width}) => {
+const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
   const [height, setHeight] = useState<number>(100);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [opacity, setOpacity] = useState<number>(0);
+  const navigate = useNavigate();
+  const {currentUser, getUser} = useContext(AuthContext)
 
   useEffect(() => {
     const img = new Image();
-    img.src = imageUrl;
+    img.src = image.url;
 
     img.onload = () => {
       const aspectRatio = img.width / img.height;
@@ -62,7 +125,7 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({imageUrl, width}) => {
     img.onerror = () => {
       console.error("Failed to show image");
     }
-  }, [imageUrl, width]);
+  }, [image, width]);
 
   useEffect(() => {
     if(isLoaded){
@@ -70,24 +133,78 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({imageUrl, width}) => {
     }
   })
 
-  return (
-    <div>
+  const handleAddButtonClicked = async (image:ImageData) => {
+    const url = image.url
+    alert(url);
+    if(!currentUser){
+      navigate("/SignIn");
+      return;
+    }
+
+    try{
+
+    const options = {
+      method: "POST",
+      url: "/mylist/add",
+      data: {
+        url: url,
+        imageId: url,
+        id: currentUser.id
+      }
+    }
+
+    const response = await apiRequest(options);
+
+    console.log(response);
+  }catch(error){
+    console.error("Failed to add image to mylist.");
+
+  }
+
 
     
-      
+  }
+
+  return (
+
+
+    
+      <Card sx={{ width: width  , backgroundColor: "background.default", boxShadow: 4,
+        '&:hover .hover-actions': {
+          opacity: 1, // ホバー時にボタンを表示
+        },
+      }}>
       <CardMedia
       sx={{ width: width, 
             height: height,
             opacity: opacity,
             transition: 'opacity 1s ease-in-out, height 1s ease-in-out',
+            
           
             }}
-      image={imageUrl}
+      image={image.url}
       title="image"
       
       />
+      <CardActions
+        className="hover-actions"
+        sx={{
+          opacity: 0, 
+          transition: 'opacity 0.3s ease', 
+          position: 'absolute', 
+          bottom: 5, 
+          left: 5,
+        }}
+      >
+        <Button size="medium" variant="contained" 
+          onClick={() =>handleAddButtonClicked(image)}>
+            Add
+        </Button>
+       
+      </CardActions>
+      </Card>
     
-    </div>
+   
   )
 }
 export default MasonryImageList;
