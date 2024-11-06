@@ -4,6 +4,7 @@ import { verifyToken } from "../middlewhere/verifyToken";
 
 const router = express.Router();
 
-router.put("/post", verifyToken, ImageController.addImage);
+router.post("/add", verifyToken, ImageController.addImage);
+router.post("/", verifyToken, ImageController.getImage);
 
 export default router;

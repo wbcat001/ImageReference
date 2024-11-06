@@ -24,7 +24,7 @@ app.use(cookieParser());
 // cors
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: process.env.ORIGIN_URL,
         credentials: true,
         optionsSuccessStatus: 200
     })
@@ -35,6 +35,9 @@ app.use(cookieParser())
 app.use("/api/auth", authRoute);
 app.use("/api/image", imageRetrieveRoute);
 app.use("/api/mylist", myListRoute)
+app.get("/api/hello", (req, res) => {
+    res.status(200).json("hello")
+})
 
 
 app.listen(PORT, () => {

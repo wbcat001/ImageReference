@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE `Image` (
     `_id` VARCHAR(191) NOT NULL,
-    `url` VARCHAR(191) NOT NULL,
+    `url` VARCHAR(400) NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
-    `imageId` VARCHAR(191) NOT NULL,
+    `imageId` VARCHAR(400) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `Image_userId_key`(`userId`),
