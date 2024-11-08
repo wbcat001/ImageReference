@@ -16,7 +16,7 @@ const SearchView: React.FC = () => {
     const [word, setWord] = useState<string>("");
     const [images, setImages] = useState<ImageData[]>([]);
     const imageRetriever = new ImageRetriever();
-    const appTheme = useTheme()
+
 
     const onHandleEnter = async () =>{
         console.log("enter", word);
@@ -50,7 +50,7 @@ const SearchView: React.FC = () => {
         }
     }
     return (
-        <ThemeProvider theme={appTheme}>
+   
         <Box sx={{m: 2}}>
             <TextField id="outlined-basic" 
             label="Search" 
@@ -69,7 +69,6 @@ const SearchView: React.FC = () => {
             <MasonryImageList images={images}/>
             
         </Box>
-        </ThemeProvider>
     )
 }
 

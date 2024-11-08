@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import MasonryImageList from './SearchView/ImageList';
 import SideBar from './Main/SideBar';
@@ -15,7 +15,7 @@ import SignIn from './SignIn/SingIn';
 import SignUp from './SignUp/SignUp';
 import MyListView from "./MyListView/MyListView";
 import { AuthContextProvider } from './Context/AuthContext';
-
+import AnalyView from "./AnalyView/AnalyView";
 import HomeView from './HomeView/Homeview';
 
 function App() {
@@ -76,6 +76,7 @@ function App() {
             <Route path="/SignUp" element={<SignUp/>}/>
             <Route path="/SignIn" element={<SignIn/>}/>
             <Route path="/MyList" element={<MyListView/>}/>
+            <Route path="/Analy" element={<AnalyView/>}/>
             
           </Routes>
         </Grid>

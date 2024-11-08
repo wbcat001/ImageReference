@@ -26,14 +26,15 @@ const SideBar:React.FC =  () => {
         {link: "/", text: "Home"},
         {link: "/Search", text: "Search"},
         {link: "/SignIn", text: "Login"},
-        {link: "/MyList", text: "MyList"}
+        {link: "/MyList", text: "MyList"},
+        {link: "/Analy", text: "Analy"}
     ]
 
-    const appTheme = useTheme();
+    
 
     return (
     <div>
-      <ThemeProvider theme={appTheme}>
+  
       {/* <Toolbar /> */}
       
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', p: 0 }}>
@@ -61,7 +62,7 @@ const SideBar:React.FC =  () => {
       
      
       
-      </ThemeProvider>
+
     </div>
     )
 };

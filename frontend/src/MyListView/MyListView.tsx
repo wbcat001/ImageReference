@@ -40,7 +40,7 @@ const MyListView: React.FC = () => {
     const [images, setImages] = useState<ImageData[]>([]);
     const {updateUser, getUser, currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
-    const appTheme = useTheme()
+   
 
     useEffect(() => {
 
