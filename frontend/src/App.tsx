@@ -18,11 +18,50 @@ import { AuthContextProvider } from './Context/AuthContext';
 import AnalyView from "./AnalyView/AnalyView";
 import HomeView from './HomeView/Homeview';
 
+import {useMediaQuery} from '@mui/material';
 function App() {
+
+  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   
   const theme = createTheme({
     palette: {
-      mode: "light",
+      mode: isDarkMode ? 'dark' : 'light',
+      ...(isDarkMode) ?
+      {
+      primary: {
+        main: "#d87274",
+        light: "#ffa2a3",
+        dark: "#a34449",
+      },
+      secondary: {
+        main: '#ff4081', 
+        light: '#ff79b0', 
+        dark: '#c60055', 
+      },
+      background: {
+        default: "121212",
+        paper: "#1e1e1e",
+
+      },
+      text:{
+        primary: '#333333', // メインの文字色
+        secondary: '#555555', // サブの文字色
+      },
+      info: {
+        main: '#0288d1', // 情報表示に使う青色
+      },
+      success: {
+        main: '#388e3c', // 成功表示に使う緑色
+      },
+      error: {
+        main: '#d32f2f', // エラー表示に使う赤色
+      },
+      warning: {
+        main: '#ffa000', // 警告表示に使うオレンジ色
+      },
+    }
+    :
+    {
       primary: {
         main: "#d87274",
         light: "#ffa2a3",
@@ -54,6 +93,7 @@ function App() {
       warning: {
         main: '#ffa000', // 警告表示に使うオレンジ色
       },
+    }
     }
   })
   
