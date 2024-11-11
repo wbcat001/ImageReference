@@ -45,6 +45,7 @@
 - jwtを使用したcookieを利用した認証
 
 # Material Designを参考にしたhooksなどの実装
+[Material Design](https://m3.material.io/)を読んでいて、インタラクションやアニメーションを含むデザインの定量化がされていてとてもおもしろかったので参考にしつつ、それらの機能を実現するためのカスタムフックやコンポーネントの実装を行っていく予定です。
 
 - [ ] サイドバーを使ったページ遷移
     - Top levelのtransitionによってページの遷移を行う。 [Transition: Material Design](https://m3.material.io/styles/motion/transitions/transition-patterns#f852afd2-396f-49fd-a265-5f6d96680e16)
