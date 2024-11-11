@@ -65,8 +65,9 @@
 
 - [ ] サイドバーを使ったページ遷移
     - Top levelのtransitionによってページの遷移を行う。 [Transition: Material Design](https://m3.material.io/styles/motion/transitions/transition-patterns#f852afd2-396f-49fd-a265-5f6d96680e16)
+    framer-motionとreact-router-domを使用して、遷移が起こった際のアニメーションイベントを指定する。
     - サイドバーの選択が保持されている間の色の変更
- framer-motionとreact-router-domを使用して、遷移が起こった際のアニメーションイベントを指定する。
+      
 - [ ] Loading画面
     - skelton loaderの実装。読み込みが終わっていない段階での事前レイアウト、左上から右下への脈動アニメーション。非同期関数をラップしてloading状態を監視することで行う。 [skelton loaders: Material Design](https://m3.material.io/styles/motion/transitions/transition-patterns#b39a0641-1b44-4864-83f5-fac38e0bd94a)
 - [ ] レイアウト
@@ -76,6 +77,6 @@
 - [ ] スワイプライクなスクロール
     - このアプリは主にpc向けだがiosアプリのようなスワイプ操作に近いスクロールを行う。
 - [ ] カーソル
-      マウス座標を取得するhooksを作り、マウス座標に追従するポインターをつけた。
+      - マウス座標を取得するhooksを作り、マウス座標に追従するポインターをつけた。
 
 
