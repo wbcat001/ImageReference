@@ -17,9 +17,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {Link as RouterLink} from "react-router-dom";
 import { styled } from '@mui/material';
+import { useState } from 'react';
 
 
-
+const StyledLink = styled(RouterLink)({
+  textDecoration: "none", 
+  color: "inherit", 
+  "&:hover": {
+    textDecoration: "none", 
+  },
+});
 
 const SideBar:React.FC =  () => {
 
@@ -31,11 +38,10 @@ const SideBar:React.FC =  () => {
         {link: "/Analy", text: "Analy"}
     ]
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
+    const [selected, setSelected] = useState<string>("Home")
 
-    const toggleDrawer = (newOpen: boolean) => () => {
-      setOpen(newOpen);
-    };
+    
     return (
     <div>
   
@@ -53,12 +59,11 @@ const SideBar:React.FC =  () => {
       <List>
         {MenuItem.map((item, index) => (
           <SideBarLine>
-          <ListItem key={item.text} disablePadding component={RouterLink} to={item.link}>
-            <ListItemButton >
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon> */}
-              <ListItemText primary={item.text} sx={{ color: '#dd4444' }}/>
+          <ListItem key={item.text} color="primary" disablePadding component={StyledLink} to={item.link} sx={{backgroundColor: selected != item.text ? "primary.main" : "primary.dark"}}>
+            <ListItemButton color="primary" onClick={() => setSelected(item.text)}
+              >
+              
+              <ListItemText primary={item.text} sx={{ color:  "primary.contrastText"}}/>
             </ListItemButton>
           </ListItem>
           </SideBarLine>  
@@ -76,7 +81,8 @@ const SideBar:React.FC =  () => {
 const SideBarLine = styled(Box)(({ theme }) => ({
           // Adjust width as needed
  
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: theme.palette.background.default,
+  color: theme.palette.secondary.main,
   position: 'relative',
   '&::after': {
     content: '""',

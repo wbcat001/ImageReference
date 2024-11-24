@@ -3,7 +3,7 @@ import * as React from "react";
 import { useState } from "react";
 import { ThemeProvider, createTheme, useTheme } from '@mui/material/styles'
 import MasonryImageList from "./ImageList";
-import { TextField } from "@mui/material";
+import { Container, TextField } from "@mui/material";
 import { Box } from "@mui/material";
 
 import { ImageData } from "../Model/ImageData";
@@ -50,21 +50,42 @@ const SearchView: React.FC = () => {
         }
     }
     return (
-   
+        
         <Box sx={{m: 2}}>
+          
+
             <TextField id="outlined-basic" 
             label="Search" 
-            variant="outlined"    
-           
+            variant="outlined"   
+            sx={{ ariaLabel: 'email' ,
+                color: "primary.main",
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'background.default',   
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'primary.main',    
+                  },
+                },
+                inputArea: {
+                    '& .MuiInputBase-input': {
+                      WebkitBoxShadow: '0 0 0 1000px white inset', // inputBoxオートコンプリート利用時、サジェスト内を白くする
+                    },
+                  },
+              }
+              
+            } 
+            
             onChange={e => {
                 setWord(e.target.value)      
             }}
             onKeyDown={e => {
                 if (e.keyCode === 13) {
-                  onHandleEnter();
+                    onHandleEnter();
                 }
             }}
             />
+        
         
             <MasonryImageList images={images}/>
             
