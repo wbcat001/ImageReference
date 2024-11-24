@@ -1,7 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
@@ -18,73 +19,149 @@ import { AuthContextProvider } from './Context/AuthContext';
 import AnalyView from "./AnalyView/AnalyView";
 import HomeView from './HomeView/Homeview';
 
+import {useMediaQuery} from '@mui/material';
+
+import { TransitionPageWrapper } from './TestView/UseTransition';
+import { AnimatePresence } from 'framer-motion';
+import AnimatedLayout from './TestView/AnimatedLayout';
+import CustomPointer, {Pointer} from './hooks/Pointer';
+import useMousePosition from './hooks/useMousePosition';
+
+
 function App() {
-  
+
+  const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const location = useLocation();
+  const locationArr = location.pathname?.split("/") ?? [];
   const theme = createTheme({
     palette: {
-      mode: "light",
+      mode: isDarkMode ? 'dark' : 'light',
+      ...(isDarkMode) ?
+      { // Dark theme
       primary: {
-        main: "#d87274",
-        light: "#ffa2a3",
-        dark: "#a34449",
+        main: "#620921",
+        light: "#813A4D",
+        dark: "#440617",
+        contrastText:"#fff"
       },
       secondary: {
-        main: '#ff4081', 
-        light: '#ff79b0', 
-        dark: '#c60055', 
+        main: '#dae0ec', 
+        light: '#E1E6EF', 
+        dark: '#989CA5', 
+        contrastText:"#000000"
       },
       background: {
-        default: "#f5f5f5",
-        paper: "#ffffff",
+        default: "#141416",
+        paper: "#312e2e",
 
       },
       text:{
-        primary: '#333333', // メインの文字色
-        secondary: '#555555', // サブの文字色
+        primary: '#fff', 
+        secondary: "rgba(255, 255, 255, 0.7)", 
+        disabled: "rgba(255, 255, 255, 0.5)"
       },
       info: {
-        main: '#0288d1', // 情報表示に使う青色
+        main: '#0288d1', 
       },
       success: {
-        main: '#388e3c', // 成功表示に使う緑色
+        main: '#388e3c',
       },
       error: {
-        main: '#d32f2f', // エラー表示に使う赤色
+        main: '#d32f2f',
       },
       warning: {
-        main: '#ffa000', // 警告表示に使うオレンジ色
+        main: '#ffa000',
       },
+      // action: {
+      //   selected: "#440617",
+      //   hover: "#813A4D",
+      //   focus: "#f0f2f7"
+      // },
+      divider: "rgba(0, 0, 0, 0.12)"
+
+
+    }
+    :
+    { // Light theme
+      primary: {
+        main: "#620921",
+        light: "#813A4D",
+        dark: "#440617",
+        contrastText:"#fff"
+      },
+      secondary: {
+        main: '#292d31', 
+        light: '#53575A', 
+        dark: '#1C1F22', 
+      },
+      background: {
+        default: "#dae0ec",
+        paper: "#f0f2f7",
+
+      },
+      text:{
+        primary: '#333333', 
+        secondary: '#555555', 
+      },
+      info: {
+        main: '#0288d1', 
+      },
+      success: {
+        main: '#388e3c',
+      },
+      error: {
+        main: '#d32f2f',
+      },
+      warning: {
+        main: '#ffa000',
+      },
+      // action: {
+      //   selected: "#440617",
+      //   hover: "#813A4D",
+      //   focus: "#f0f2f7"
+      // },
+      divider: "rgba(0, 0, 0, 0.12)"
+
+    }
     }
   })
-  
+  const mousePosition = useMousePosition()
   return (
-    <div className="App">
+    
+   <div>
+
       <CssBaseline />
+      
       <ThemeProvider theme={theme}>
-      <BrowserRouter>
+       
       <AuthContextProvider>
       <Grid container spacing={0}>
       <Grid item xs={2} sx={{ position: 'sticky', top: 0, height: '100vh' }}>
-        <Paper sx={{ height: '100%', overflow: 'auto' , backgroundColor: "background.paper"}}>
+        <Paper sx={{ height: '100%', overflow: 'auto' , backgroundColor: "primary.main"}}>
           <SideBar/>
         </Paper>
         </Grid>
-        <Grid item xs={10}>
-          <Routes>
-            <Route path="/" element={<HomeView/>} />
-            <Route path="/Search" element={<SearchView/>} />
-            <Route path="/SignUp" element={<SignUp/>}/>
-            <Route path="/SignIn" element={<SignIn/>}/>
-            <Route path="/MyList" element={<MyListView/>}/>
-            <Route path="/Analy" element={<AnalyView/>}/>
+        <Grid item xs={10} className="main-view">
+        <Paper sx={{ height: '100%', overflow: 'auto' , backgroundColor: "background.defalut"}}>
+          <Routes location={location} key={locationArr[1]}>
+            <Route path="/" element={<AnimatedLayout><HomeView/></AnimatedLayout>} />
+            <Route path="/Search" element={<AnimatedLayout><SearchView/></AnimatedLayout>} />
+            <Route path="/SignUp" element={<AnimatedLayout><SignUp/></AnimatedLayout>} />
+            <Route path="/SignIn" element={<AnimatedLayout><SignIn/></AnimatedLayout>} />
+            <Route path="/MyList" element={<AnimatedLayout><MyListView/></AnimatedLayout>} />
+            <Route path="/Analy" element={<AnimatedLayout><AnalyView/></AnimatedLayout>} />
             
           </Routes>
+          </Paper>
         </Grid>
+        
       </Grid>
       </AuthContextProvider>
-      </BrowserRouter>
       </ThemeProvider>
-    </div>
+      <CustomPointer mousePosition={mousePosition}/>
+
+   </div>
+    
   );
 }
 

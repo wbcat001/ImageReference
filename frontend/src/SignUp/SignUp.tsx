@@ -146,11 +146,16 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
   return (
     <div>
-      <CssBaseline enableColorScheme />
+      
     
-      <SignUpContainer direction="column" justifyContent="space-between">
-        <Card variant="outlined">
-          <SitemarkIcon />
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
+        <Card variant="outlined" >
+          {/* <SitemarkIcon /> */}
           <Typography
             component="h1"
             variant="h4"
@@ -175,11 +180,32 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 error={nameError}
                 helperText={nameErrorMessage}
                 color={nameError ? 'error' : 'primary'}
+                sx={{'& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'background.default',    // 通常時のボーダー色(アウトライン)
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'primary.main',    // ホバー時のボーダー色(アウトライン)
+                  },
+                },}}
               />
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="email">Email</FormLabel>
               <TextField
+                sx={{'& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'background.default',    // 通常時のボーダー色(アウトライン)
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'primary.main',    // ホバー時のボーダー色(アウトライン)
+                  },
+                },
+                inputArea: {
+                    '& .MuiInputBase-input': {
+                      WebkitBoxShadow: '0 0 0 1000px white inset', // inputBoxオートコンプリート利用時、サジェスト内を白くする
+                    },
+                  },}}
                 required
                 fullWidth
                 id="email"
@@ -206,6 +232,14 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 error={passwordError}
                 helperText={passwordErrorMessage}
                 color={passwordError ? 'error' : 'primary'}
+                sx={{'& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: 'background.default',    // 通常時のボーダー色(アウトライン)
+                  },
+                  '&:hover fieldset': {
+                    borderColor: 'primary.main',    // ホバー時のボーダー色(アウトライン)
+                  },
+                },}}
               />
             </FormControl>
             <FormControlLabel
@@ -233,7 +267,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           </Box>
          
         </Card>
-      </SignUpContainer>
+      </Box>
       </div>
   );
 }

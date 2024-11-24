@@ -22,6 +22,7 @@ import { AuthContext } from '../Context/AuthContext';
 import { useContext } from 'react';
 
 import apiRequest from "../lib/apiRequest"
+import { Container } from '@mui/material';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -157,11 +158,16 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
   return (
     <div>
-      <CssBaseline enableColorScheme />
-      <SignInContainer direction="column" justifyContent="space-between">
+    
+          <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
      
-        <Card variant="outlined">
-          <SitemarkIcon />
+        <Card variant="outlined" >
+          {/* <SitemarkIcon /> */}
           <Typography
             component="h1"
             variant="h4"
@@ -189,13 +195,30 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 type="name"
                 name="name"
                 placeholder="your@email.com"
-                autoComplete="email"
+                // autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
                 color={emailError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'email' }}
+                sx={{ ariaLabel: 'email' ,
+                  color: "primary.main",
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'background.default',   
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'primary.main',    
+                    },
+                  },
+                  inputArea: {
+                    '& .MuiInputBase-input': {
+                      WebkitBoxShadow: '0 0 0 1000px white inset', // inputBoxオートコンプリート利用時、サジェスト内を白くする
+                    },
+                  }
+                }
+              }
+                
               />
             </FormControl>
             <FormControl>
@@ -224,6 +247,21 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
                 fullWidth
                 variant="outlined"
                 color={passwordError ? 'error' : 'primary'}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: 'background.default',    // 通常時のボーダー色(アウトライン)
+                    },
+                    '&:hover fieldset': {
+                      borderColor: 'primary.main',    // ホバー時のボーダー色(アウトライン)
+                    },
+                  },
+                  inputArea: {
+                    '& .MuiInputBase-input': {
+                      WebkitBoxShadow: '0 0 0 1000px white inset', // inputBoxオートコンプリート利用時、サジェスト内を白くする
+                    },
+                  }
+                }}
               />
             </FormControl>
             <FormControlLabel
@@ -234,11 +272,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             <Button
               type="submit"
               fullWidth
-              variant="contained"
-              // onClick={validateInputs}
-              // component={RouterLink}
-              // to="/SignIn"
-              
+              variant="contained"        
             >
               Sign in
             </Button>
@@ -257,7 +291,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           
           
         </Card>
-      </SignInContainer>
+      </Box>
       </div>
  
   );

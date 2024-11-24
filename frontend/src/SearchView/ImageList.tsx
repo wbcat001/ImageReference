@@ -81,8 +81,8 @@ const MasonryImageList: React.FC<ImageListProps> = ({images}) =>  {
         <div ref={targetRef}>
         <Box >
           <ImageList variant="masonry" cols={col} gap={10}>
-            {images.map((image) => (
-              <ImageListItem key={image.url}>
+            {images.map((image, index) => (
+              <ImageListItem key={index}>
                 
                 
                     <AdjustedCardMedia width={ width/col - 10} image={image}/>
