@@ -1,7 +1,7 @@
 import express from "express";
 import {NextFunction, Request, Response} from "express";
 import prisma from "../lib/prisma.js"
-import { loadImageFromUrl, processImageToGrayScale, saveImageToFile, createColorPalette} from "../lib/imageAnalysis/imageAnalysis";
+import { ImageProcesser } from "../lib/imageAnalysis/imageAnalysis";
 
 
 export class ImageAnalysisController{
@@ -11,9 +11,9 @@ export class ImageAnalysisController{
 
         try{
             const {url} = req.body;
-            const image = loadImageFromUrl(url);
-            const processedImage = processImageToGrayScale(await image);
-            const outputFileName = saveImageToFile(await processedImage);
+            const image = ImageProcesser.loadImage(url);
+            const processedImage = ImageProcesser.processGrayScale(await image);
+            const outputFileName = ImageProcesser.saveImage(processedImage);
 
             console.log(await outputFileName);
             
@@ -27,11 +27,10 @@ export class ImageAnalysisController{
 
     static async processImage2(req:Request, res:Response):
     Promise<void>{
-
         try{
             const {url} = req.body;
-            const image = loadImageFromUrl(url);
-            const colors = createColorPalette(await image);
+            const image = ImageProcesser.loadImage(url);
+            const colors = ImageProcesser.processForColor(await image);
             // const outputFileName = saveImageToFile(await processedImage);
 
             console.log(await colors);
@@ -41,6 +40,19 @@ export class ImageAnalysisController{
             console.error(error);
             res.status(500).json({message: "Failed to process image"})
         }
+    }
+
+    static async processImage3(req: Request, res: Response): Promise<void>{
+        try{
+            const {url} = req.body;
+            const image = ImageProcesser.loadImage(url);
+            ImageProcesser.processForShape(await image);
+            res.status(200).json({message: "success"});
+
+        }catch(error){
+            console.error(error);
+        }
+
     }
 
 }
