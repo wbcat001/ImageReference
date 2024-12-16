@@ -2,10 +2,12 @@
 import express, {Request, Response} from "express";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
+import cors from "cors";
+// Router
 import authRoute from "./route/AuthRoute";
 import imageRetrieveRoute from "./route/RetrieveImageRoute";
 import myListRoute from "./route/MyListRoute";
-import cors from "cors";
+import imageAnalysisRoute from "./route/ImageAnalysisRoute";
 
 import jwt from "jsonwebtoken";
 
@@ -38,6 +40,7 @@ app.use("/api/mylist", myListRoute)
 app.get("/api/hello", (req, res) => {
     res.status(200).json("hello")
 })
+app.use("/api/analy", imageAnalysisRoute);
 
 
 app.listen(PORT, () => {
