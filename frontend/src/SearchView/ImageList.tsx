@@ -11,26 +11,14 @@ import { ImageData } from '../Model/ImageData';
 import { CircularProgress } from "@mui/material";
 import CardActions from "@mui/material/CardActions";
 
+
 import Button from '@mui/material/Button';
 
 import { AuthContext } from "../Context/AuthContext";
 import apiRequest from "../lib/apiRequest";
 import { useNavigate } from "react-router-dom";
 import { RefObject } from "react";
-const useWindowWidth = () => {
-  const [width, setWidth] = useState<number>(window.innerWidth);
-
-  useEffect(() =>{
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resizee", handleResize);
-
-    return () =>{
-      window.removeEventListener("resize", handleResize);
-    }
-  }, []);
-
-  return width;
-}
+import { Skeleton } from '@mui/material';
 
 type DOMRectProperty = keyof Omit<DOMRect, 'toJSON'>;
 
@@ -63,7 +51,7 @@ const useGetElementProperty = <T extends HTMLElement>(elementRef: RefObject<T>) 
   return width;
 }
 
-
+//// Image List with masonry layout
 interface ImageListProps{
     images: ImageData[]
 
@@ -83,10 +71,7 @@ const MasonryImageList: React.FC<ImageListProps> = ({images}) =>  {
           <ImageList variant="masonry" cols={col} gap={10}>
             {images.map((image, index) => (
               <ImageListItem key={index}>
-                
-                
                     <AdjustedCardMedia width={ width/col - 10} image={image}/>
-               
               </ImageListItem>
             ))}
           </ImageList>
@@ -99,7 +84,7 @@ const MasonryImageList: React.FC<ImageListProps> = ({images}) =>  {
 
 
 
-
+//// Each Image Card
 interface CardMediaProps{
   image: ImageData;
   width: number;
@@ -156,38 +141,33 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
     const response = await apiRequest(options);
 
     console.log(response);
-  }catch(error){
-    console.error("Failed to add image to mylist.");
+    }catch(error){
+      console.error("Failed to add image to mylist.");
 
-  }
-
-
-    
+    }
   }
 
   return (
-
-
-    
+    <div>
+      {isLoaded ? ( 
       <Card sx={{ width: width  , backgroundColor: "background.default", boxShadow: 4,
         '&:hover .hover-actions': {
-          opacity: 1, // ホバー時にボタンを表示
+          opacity: 1, // Button appear
         },
       }}>
+      
       <CardMedia
       sx={{ width: width, 
             height: height,
             opacity: opacity,
-            transition: 'opacity 1s ease-in-out, height 1s ease-in-out',
-            
-          
+            transition: 'opacity 1s ease-in-out',
             }}
       image={image.url}
       title="image"
       
       />
       <CardActions
-        className="hover-actions"
+        className="hover-actions" // button hover animation
         sx={{
           opacity: 0, 
           transition: 'opacity 0.3s ease', 
@@ -195,15 +175,21 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
           bottom: 5, 
           left: 5,
         }}
-      >
+        > 
         <Button size="medium" variant="contained" 
           onClick={() =>handleAddButtonClicked(image)}>
             Add
         </Button>
        
       </CardActions>
-      </Card>
-    
+      
+      </Card>)
+      : 
+      (
+        <Skeleton variant="rectangular" width="100%" height={400} />
+      )
+    }
+   </div>
    
   )
 }

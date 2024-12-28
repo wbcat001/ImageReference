@@ -15,7 +15,7 @@ interface ContentProps {
     text: string
 }
 
-const Content:React.FC<ContentProps> = ({text}) => {
+const Content: React.FC<ContentProps> = ({text}) => {
     return (
       <div>
         <p>{text}</p>
