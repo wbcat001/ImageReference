@@ -14,3 +14,5 @@ export const AnalysisCard: React.FC<AnalysisCardProps> = ({ title, children }) =
     </div>
   );
 };
+
+export default AnalysisCard;

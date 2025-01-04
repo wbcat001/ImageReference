@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AnalysisCard } from './AnalysisCard';
+import { AnalysisCard } from './AnalysisComponentCard';
 
 
 interface WithAnalysisProps{
@@ -21,10 +21,48 @@ export const withAnalysis = <P extends object>(
     }) =>{
         // result, loading, error
 
+        const [result, setResult] = useState<any|null>(null);
+        const [isLoading, setIsLoading] = useState<boolean>(true);
+        const [error, setError] = useState<string>("");
         //fetchdata
+        const fetchData = async () => {
+          try{
+            const data = await fetchResult(url);
+            setResult(data);
+          }catch(error: unknown){
+            if (error instanceof Error)
+            setError(error.message)
+          }finally{
+            setIsLoading(false);
+          }
 
+        };
         //useEffect: fetchdata
-
+        useEffect(() =>{
+          fetchData();
+        },[url])
         // return component: loading, error, or result vis(), delete, rerender
+
+        return (
+          <AnalysisCard> 
+          isLoading? (
+            <div>loading design</div>
+          ):(
+            error? (<div>
+              error design
+            </div>
+
+            ):
+              <WrappedComponent {... (rest as P)} result={result} />
+              
+              
+          )
+          <div> 
+                <button onClick={fetchData}></button>
+                <button onClick={() => onDelete(id)}></button>
+              </div>
+          </AnalysisCard>
+        )
     }
+    return HOC;
 }
