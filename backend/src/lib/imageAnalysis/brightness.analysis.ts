@@ -13,6 +13,8 @@ export class BrightnessProcesser extends ImageProcesser{
 
     static getBrightnessArray = (image: typeof Jimp, quality: number = 1): number[] => {
         const brightnessArray: number[] = [];
+        image = image.resize(50, Jimp.AUTO);
+
         const width = image.bitmap.width;
         const height = image.bitmap.height;
         
