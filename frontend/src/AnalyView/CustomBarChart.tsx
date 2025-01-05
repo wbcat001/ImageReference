@@ -68,7 +68,7 @@ export const CustomBarChart : React.FC<CustomBarChartProps> = ({brightnessArray}
     const [bin, setBin] = useState<number>(10)
     const targetRef = useRef(null);
     const width = useGetElementProperty(targetRef)
-    const aspect = 0.5
+    const aspect = 0.3
     const scale = 1
 
     const handleBinChange = (e:Event, newValue: number | number[]) => {
@@ -85,13 +85,13 @@ export const CustomBarChart : React.FC<CustomBarChartProps> = ({brightnessArray}
 
     // const [axisData, setAxisData]
     return (
-      <Card variant="outlined" sx={{ height: '100%', flexGrow: 1 }}>
+     
       <Box ref={targetRef} sx={{m:2}}>
-        <Typography textAlign="left" sx={{mb:1}} fontWeight="fontWeightBold">Brightness</Typography>
+     
         <Slider
                 value={bin}
                 onChange={handleBinChange}
-                // valueLabelDisplay="auto"
+                valueLabelDisplay="auto"
                 min={2}
                 max={20}
                 aria-labelledby="input-item-number"
@@ -119,7 +119,7 @@ export const CustomBarChart : React.FC<CustomBarChartProps> = ({brightnessArray}
         />
     
       </Box>
-      </Card>
+ 
     )
 }
 

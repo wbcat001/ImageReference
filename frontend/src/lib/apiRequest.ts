@@ -11,3 +11,18 @@ const apiRequest = axios.create({
 console.log("apiURL: ", apiBaseURL)
 
 export default apiRequest;
+
+/* How to use: Example
+const options = {
+            method: "POST",
+            url: "/mylist",    
+            data: {
+                num: 10,
+                id: userId
+            }
+        }
+const response = await apiRequest(options);
+
+const images: SavedImageData[] = response.data;
+
+*/

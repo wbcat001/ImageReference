@@ -104,17 +104,17 @@ const ColorCard: React.FC<ColorBoxProps> = ({color}) => {
     return (
         
         <Box
-                    sx={{
-                        backgroundColor: color,
-                        height: 100,
-                        
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      
-                 
-                       
-                    }}
+            sx={{
+                backgroundColor: color,
+                height: 100,
+                
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                
+            
+                
+            }}
                    >
             {/* <Typography variant="body1" color="white" fontWeight="bold">
               {color}

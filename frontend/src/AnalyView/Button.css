@@ -1,0 +1,60 @@
+.button {
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--background-white);
+    border: 2px solid transparent;
+  }
+  
+  .button:disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  
+  .small {
+    padding: 0.25rem 0.75rem;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+  
+  .medium {
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+  
+  .large {
+    padding: 0.5rem 3rem;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+  
+  .primary {
+    color: var(--background-white);
+    background-color: var(--background-blue);
+  }
+  
+  .primary:hover {
+    background-color: var(--background-blue-hover1);
+  }
+  
+  .primary:active {
+    background-color: var(--background-blue-active1);
+  }
+  
+  .secondary {
+    color: var(--background-blue);
+    border-color: var(--background-blue);
+  }
+  
+  .secondary:hover {
+    background-color: var(--background-blue-hover2);
+  }
+  
+  .secondary:active {
+    background-color: var(--background-blue-active2);
+  }
+  
+  .alert {
+    color: var(--background-white);
+    background-color: var(--background-red);
+  }

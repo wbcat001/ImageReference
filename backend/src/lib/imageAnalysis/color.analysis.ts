@@ -6,18 +6,18 @@ import quantize from "quantize";
 
 
 export class ColorProcesser extends ImageProcesser{
-    static getAttribute = async (imagePath: string): Promise<quantize.RgbPixel[]> => {
+    static getAttribute = async (imagePath: string): Promise<string[]> => {
         const image = await this.loadImage(imagePath);
         const palette = this.getPalette(image);
-        return palette? palette : [[0,0,0]]
+        return palette? palette : ["#ffffff"]
         
     }
-    static getColor = (image: typeof Jimp, colorCount: number = 10, quality: number = 1): quantize.RgbPixel => {
+    static getColor = (image: typeof Jimp, colorCount: number = 10, quality: number = 1): string => {
         const palette = this.getPalette(image, colorCount, quality);
-        return palette? palette[0] : [0, 0, 0];
+        return palette? palette[0] : "#ffffff";
     }
 
-    static getPalette = (image: typeof Jimp, colorCount: number = 10, quality: number = 1): quantize.RgbPixel[] | null => {
+    static getPalette = (image: typeof Jimp, colorCount: number = 10, quality: number = 1): string[] | null => {
         
         const pixelCount = image.bitmap.width * image.bitmap.height;
 
@@ -25,10 +25,13 @@ export class ColorProcesser extends ImageProcesser{
         const pixelArray = core.createPixelArray(image, pixelCount, quality);
 
         const colorMap = quantize(pixelArray, colorCount);
-        const palette = colorMap? colorMap.palette(): null;
+        const palette = colorMap? colorMap.palette(): [];
 
-        return palette;
+
+        const paletteColorCode = core.rgbPixelsToColorCodes(palette);
+        return paletteColorCode;
     }
+
 
 }
 

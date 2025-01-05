@@ -1,4 +1,6 @@
 import Jimp from "jimp";
+import quantize from "quantize";
+
 type RgbPixel = [number, number, number];
 // create
 const createPixelArray = (
@@ -20,11 +22,18 @@ const createPixelArray = (
         return pixelArray;
     }
 
+const rgbPixelsToColorCodes = (rgbPixels: quantize.RgbPixel[]): string[] => {
+    return rgbPixels.map(([r, g, b]) =>
+        `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`
+    );
+    };
+
 const getBase64 = async (image: typeof Jimp):Promise<string> =>{
     return image.getBase64Async("image/jpeg");
 }
 
 export default {
     createPixelArray,
+    rgbPixelsToColorCodes, 
     getBase64
 }

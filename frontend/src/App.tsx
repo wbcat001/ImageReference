@@ -26,10 +26,10 @@ import { AnimatePresence } from 'framer-motion';
 import AnimatedLayout from './TestView/AnimatedLayout';
 import CustomPointer, {Pointer} from './hooks/Pointer';
 import useMousePosition from './hooks/useMousePosition';
-
+const sampleURL = "https://images.unsplash.com/photo-1606814893907-c2e42943c91f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjYxOTB8MHwxfHNlYXJjaHwxfHxnaXJsfGVufDB8fHx8MTczMDUzODExMXww&ixlib=rb-4.0.3&q=80&w=1080"
 
 function App() {
-  const url = "https://images.unsplash.com/photo-1606814893907-c2e42943c91f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjYxOTB8MHwxfHNlYXJjaHwxfHxnaXJsfGVufDB8fHx8MTczMDUzODExMXww&ixlib=rb-4.0.3&q=80&w=1080"
+  
   const isDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const location = useLocation();
   const locationArr = location.pathname?.split("/") ?? [];
@@ -149,7 +149,7 @@ function App() {
             <Route path="/SignUp" element={<AnimatedLayout><SignUp/></AnimatedLayout>} />
             <Route path="/SignIn" element={<AnimatedLayout><SignIn/></AnimatedLayout>} />
             <Route path="/MyList" element={<AnimatedLayout><MyListView/></AnimatedLayout>} />
-            <Route path="/Analy" element={<AnimatedLayout><AnalyView url={url}/></AnimatedLayout>} />
+            <Route path="/Analy" element={<AnimatedLayout><AnalyView url={sampleURL}/></AnimatedLayout>} />
             
           </Routes>
           </Paper>
