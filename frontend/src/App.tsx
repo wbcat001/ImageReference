@@ -149,7 +149,7 @@ function App() {
             <Route path="/SignUp" element={<AnimatedLayout><SignUp/></AnimatedLayout>} />
             <Route path="/SignIn" element={<AnimatedLayout><SignIn/></AnimatedLayout>} />
             <Route path="/MyList" element={<AnimatedLayout><MyListView/></AnimatedLayout>} />
-            <Route path="/Analy" element={<AnimatedLayout><AnalyView url={sampleURL}/></AnimatedLayout>} />
+            <Route path="/Analy" element={<AnimatedLayout><AnalyView/></AnimatedLayout>} />
             
           </Routes>
           </Paper>

@@ -65,11 +65,12 @@ export const CustomBarChart : React.FC<CustomBarChartProps> = ({brightnessArray}
   
     const [itemData, setItemData] = useState<BarItemIdentifier>();
     const [itemNb, setItemNb] = useState<number>(2)
-    const [bin, setBin] = useState<number>(10)
+    const [bin, setBin] = useState<number>(3)
     const targetRef = useRef(null);
     const width = useGetElementProperty(targetRef)
     const aspect = 0.3
     const scale = 1
+    
 
     const handleBinChange = (e:Event, newValue: number | number[]) => {
       if (typeof newValue != "number"){

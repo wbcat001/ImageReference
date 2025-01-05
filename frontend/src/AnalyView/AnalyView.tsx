@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import apiRequest from '../lib/apiRequest';
 
 import BrightnessAnalysis from './BrightnessAnalysis';
@@ -7,9 +7,10 @@ import ColorAnalysis from './ColorAnalysis';
 import { Box, Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2"
 import AddAnalysisComponent from './AddAnalysisComponent';
+import { useLocation } from 'react-router-dom';
 
 interface AnalyViewProps{
-    url: string
+    defaulturl?: string
 }
 // 分析の種類
 export type AnalysisType = "brightness" | "color";
@@ -19,8 +20,15 @@ type AnalysisComponent = {
     analysisType: AnalysisType,
 }
 // type
+const sampleURL = "https://images.unsplash.com/photo-1606814893907-c2e42943c91f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjYxOTB8MHwxfHNlYXJjaHwxfHxnaXJsfGVufDB8fHx8MTczMDUzODExMXww&ixlib=rb-4.0.3&q=80&w=1080";
 
-export const AnalyView: React.FC<AnalyViewProps> = ({url}) => {
+export const AnalyView: React.FC<AnalyViewProps> = ({defaulturl}) => {
+    const location = useLocation();
+    const imageUrl = location.state ?  location.state.url: sampleURL;
+    // const [imageUrl, setImageUrl] = useState<string>("")
+    
+    console.log("image URL is ", imageUrl);
+    
     // default component list, component list, main image
     // const [image, setImage] = useState
     const defaultAnalysisComponents: AnalysisComponent[] = [
@@ -47,20 +55,22 @@ export const AnalyView: React.FC<AnalyViewProps> = ({url}) => {
             case "brightness":
                 return <BrightnessAnalysis 
                             id={analysisComponent.id}
-                            url={url}
+                            url={imageUrl}
                             // fetchResult={(url) => Promise.resolve(Array.from({length:100}, () => Math.random()))}
                             onDelete={handleDeleteAnalysisComponent} />
 
             case "color":
                 return <ColorAnalysis
                     id={analysisComponent.id}
-                    url={url}
+                    url={imageUrl}
                     // fetchResult={(url) => Promise.resolve(['#FF0000', '#00FF00', '#0000FF'])}
                     onDelete={handleDeleteAnalysisComponent}/>
             default:
                 return <div></div>;
         }
     }
+
+ 
     
     
     // useeffect?: imageの取得と表示
@@ -76,8 +86,16 @@ export const AnalyView: React.FC<AnalyViewProps> = ({url}) => {
             </Typography>
             <Divider sx={{m:2}}/>
             <Grid container spacing={2} columns={12}>
-                <Grid size={{ xs: 12, lg: 9 }}>
-                    <img src={url} />
+                <Grid size={{ xs: 10, lg: 9 }}>
+                <img
+                    src={imageUrl}
+                    // alt={alt}
+                    style={{
+                    width: "100%", // 親コンテナに収まる
+                    height: "auto", // アスペクト比を維持
+                    display: "block", // 中央揃え
+                    }}
+                />
                 </Grid>
             </Grid>
 

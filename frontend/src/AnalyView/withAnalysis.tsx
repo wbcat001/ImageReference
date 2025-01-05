@@ -12,6 +12,36 @@ interface WithAnalysisProps{
     onDelete: (id: string) => void;
 }
 
+interface LoadingComponentProps {
+  isLoading: boolean;
+  children: React.ReactNode;
+}
+
+const LoadingComponent: React.FC<LoadingComponentProps> = ({ isLoading, children }) => {
+  const [isRendered, setIsRendered] = useState(false); // アニメーション中の表示状態管理
+
+  useEffect(() => {
+    if (!isLoading) {
+      // isLoadingがfalseになるとアニメーションを開始
+      setTimeout(() => setIsRendered(true), 300); // アニメーション後の完全表示
+    }
+  }, [isLoading]);
+
+  return (
+    <Box
+      sx={{
+        opacity: isLoading ? 0 : 1, // 透明度の切り替え
+        transition: "opacity 10s ease-in-out", // 透明度アニメーション
+        // pointerEvents: isLoading ? "none" : "auto", // ロード中は操作不可
+        // transform: isRendered ? "scale(1)" : "scale(0.95)", // 少し縮小から拡大
+        // transitionDelay: isLoading ? "0s" : "0.3s", // 遅延設定
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
 export const withAnalysis = <P extends object>(
     WrappedComponent: React.ComponentType<P>, fetchResult: (url: string) => Promise<any>
   ) => {
@@ -44,8 +74,8 @@ export const withAnalysis = <P extends object>(
         useEffect(() =>{
           fetchData();
         },[url])
-        // return component: loading, error, or result vis(), delete, rerender
 
+        // return component: loading, error, or result vis(), delete, rerender
         return (
           <AnalysisCard>
             
@@ -58,7 +88,7 @@ export const withAnalysis = <P extends object>(
             </div>
 
             ):
-            <div>
+            <LoadingComponent isLoading={isLoading}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                <Typography variant="h6">{WrappedComponent.displayName}</Typography>
                <Box>
@@ -76,9 +106,9 @@ export const withAnalysis = <P extends object>(
                 }}
               >
               
-              <WrappedComponent {... (rest as P)} result={result} />
+              <WrappedComponent {... (rest as P)} result={result}/>
               </CardContent>
-            </div>
+            </LoadingComponent>
               
           )}
           

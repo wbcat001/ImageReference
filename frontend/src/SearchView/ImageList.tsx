@@ -118,9 +118,21 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
     }
   })
 
+  // handle: analy -> navigate to AnalyView
+  const handleAnalyButtonClicked = async (image:ImageData) => {
+    const url = image.url
+    try{
+      navigate("/Analy", 
+        {state:{url: url}});
+    }catch(error){
+      console.error(error);
+    }
+  }
+
   const handleAddButtonClicked = async (image:ImageData) => {
     const url = image.url
-    alert(url);
+    // モーダルウィンドウの表示
+    // alert(url);
     if(!currentUser){
       navigate("/SignIn");
       return;
@@ -179,6 +191,10 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
         <Button size="medium" variant="contained" 
           onClick={() =>handleAddButtonClicked(image)}>
             Add
+        </Button>
+        <Button size="medium" variant="contained" 
+          onClick={() =>handleAnalyButtonClicked(image)}>
+            Analy
         </Button>
        
       </CardActions>

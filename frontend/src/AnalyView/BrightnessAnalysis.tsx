@@ -14,7 +14,7 @@ const sampleBrightnessArray = Array.from({length: 100}, () => Math.random())
 export const BrightnessAnalysis: React.FC<BrightnessAnalysisProps> = ({result}) => {
     // const [result, setResult] = useState<number|null>(null);
 
-    return <CustomBarChart brightnessArray={sampleBrightnessArray}/>
+    return <CustomBarChart brightnessArray={result}/>
 
 }
 
