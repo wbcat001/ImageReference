@@ -153,8 +153,10 @@ const AdjustedCardMedia: React.FC<CardMediaProps> = ({image, width}) => {
     const response = await apiRequest(options);
 
     console.log(response);
+
     }catch(error){
       console.error("Failed to add image to mylist.");
+
 
     }
   }
