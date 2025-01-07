@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { AnalysisCard } from './AnalysisComponentCard';
 import { Box, Button, CardContent, Typography } from '@mui/material';
 import { AnalysisType } from './AnalyView';
-
+import AnimatedLayout from '../lib/AnimatedLayout';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 interface WithAnalysisProps{
     id: string,
@@ -16,6 +18,45 @@ interface LoadingComponentProps {
   isLoading: boolean;
   children: React.ReactNode;
 }
+
+const EmptyLayout: React.FC<React.PropsWithChildren<unknown>> = ({children}) => {
+  return <Box sx={{width:"100%", height:"100%"}}>
+    {children}
+</Box>
+}
+
+interface LoadingBoxProps {
+  loading: boolean;
+  children: React.ReactNode;
+}
+
+const LoadingBox: React.FC<LoadingBoxProps> = ({ loading, children }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "relative",
+      }}
+    >
+      {loading ? (
+        <Skeleton
+          style={{
+            width: "100%", // 親の幅に合わせる
+            height: "100%", // 親の高さに合わせる
+          }}
+        />
+      ) : (
+        children
+      )}
+    </div>
+  );
+};
+
+export default LoadingBox;
 
 const LoadingComponent: React.FC<LoadingComponentProps> = ({ isLoading, children }) => {
   const [isRendered, setIsRendered] = useState(false); // アニメーション中の表示状態管理
@@ -77,17 +118,19 @@ export const withAnalysis = <P extends object>(
 
         // return component: loading, error, or result vis(), delete, rerender
         return (
+
           <AnalysisCard>
             
             
           {isLoading? (
-            <div>loading design</div>
+            <Skeleton style={{height:200, width:"100%"}}/>
           ):(
             error? (<div>
               error design
             </div>
 
             ):
+          <AnimatedLayout>
             <LoadingComponent isLoading={isLoading}>
             <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                <Typography variant="h6">{WrappedComponent.displayName}</Typography>
@@ -109,8 +152,9 @@ export const withAnalysis = <P extends object>(
               <WrappedComponent {... (rest as P)} result={result}/>
               </CardContent>
             </LoadingComponent>
+            </AnimatedLayout>
               
-          )}
+            )}
           
         
           </AnalysisCard>

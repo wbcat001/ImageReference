@@ -8,6 +8,7 @@ import { Box, Divider, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2"
 import AddAnalysisComponent from './AddAnalysisComponent';
 import { useLocation } from 'react-router-dom';
+import AnimatedLayout from '../lib/AnimatedLayout';
 
 interface AnalyViewProps{
     defaulturl?: string
@@ -80,13 +81,15 @@ export const AnalyView: React.FC<AnalyViewProps> = ({defaulturl}) => {
     // view
     return (
         <Box sx={{ width: '100%', maxWidth: { sm: '100%', md: '1700px' } , margin:2}}>
+        
+        <Grid container spacing={2} columns={12}>
 
             
-            <Typography component="h2" variant="h6" sx={{ mb: 1, mt:2 }}>image
-            </Typography>
-            <Divider sx={{m:2}}/>
-            <Grid container spacing={2} columns={12}>
-                <Grid size={{ xs: 10, lg: 9 }}>
+            
+            <Grid size={{ xs: 12, lg: 6}}>
+                <Typography component="h2" variant="h6" sx={{ mb: 1, mt:2 }}>Image
+                </Typography>
+                <Divider sx={{m:2}}/>
                 <img
                     src={imageUrl}
                     // alt={alt}
@@ -96,22 +99,29 @@ export const AnalyView: React.FC<AnalyViewProps> = ({defaulturl}) => {
                     display: "block", // 中央揃え
                     }}
                 />
-                </Grid>
             </Grid>
 
-            <Typography component="h2" variant="h6" sx={{ mb: 1,mt:2 }}>detail</Typography>
-            <Divider sx={{m:2}}/>
-            <Grid container spacing={2} columns={12} 
-                sx={{ mb: (theme) => theme.spacing(2) }}>
-                {analysisComponents.map((analysisComponent) => (
-                    <Grid size={{xs:12, sm:6, lg:6}}>
-                        {renderAnalysisComponent(analysisComponent)}
-                    </Grid >
-                ))}
-                    <Grid size={{xs:12, sm:6, lg:3}}>
-                        <AddAnalysisComponent onAdd={handleAddAnalysisComponent}/>
-                </Grid>
-            </Grid>     
+            <Grid size={{xs: 12, lg: 6}}>
+                <Typography component="h2" variant="h6" sx={{ mb: 1,mt:2 }}>analysis</Typography>
+                <Divider sx={{m:2}}/>
+                <Grid container spacing={2} columns={12} 
+                    sx={{ mb: (theme) => theme.spacing(2) }}>
+                    {analysisComponents.map((analysisComponent) => (
+                        <Grid size={{xs:11, sm:11, lg:11}}>
+                            {/* <AnimatedLayout> */}
+
+                            {renderAnalysisComponent(analysisComponent)}
+                            {/* </AnimatedLayout> */}
+                        </Grid >
+                    ))}
+                        <Grid size={{xs:12, sm:12, lg:12}}>
+                            <AddAnalysisComponent onAdd={handleAddAnalysisComponent}/>
+                    </Grid>
+                </Grid> 
+            </Grid>   
+
+            </Grid>
+        
         </Box>
     )
     

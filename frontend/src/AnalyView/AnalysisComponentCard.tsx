@@ -17,9 +17,9 @@ export const AnalysisCard: React.FC<AnalysisCardProps> = ({ children }) => {
           md: "100%", // デスクトップでは幅50%
         },
         height: {
-          xs: "20vh", // モバイル画面では高さ30% (ビューポートの高さ)
-          sm: "30vh", // タブレットでは高さ40%
-          md: "40vh", // デスクトップでは高さ50%
+          xs: "10vh", // モバイル画面では高さ30% (ビューポートの高さ)
+          sm: "20vh", // タブレットでは高さ40%
+          md: "20vh", // デスクトップでは高さ50%
         },
         display: "flex",
         flexDirection: "column",

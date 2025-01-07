@@ -26,6 +26,7 @@ import { AnimatePresence } from 'framer-motion';
 import AnimatedLayout from './TestView/AnimatedLayout';
 import CustomPointer, {Pointer} from './hooks/Pointer';
 import useMousePosition from './hooks/useMousePosition';
+import { SkeletonTheme } from 'react-loading-skeleton';
 const sampleURL = "https://images.unsplash.com/photo-1606814893907-c2e42943c91f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2NjYxOTB8MHwxfHNlYXJjaHwxfHxnaXJsfGVufDB8fHx8MTczMDUzODExMXww&ixlib=rb-4.0.3&q=80&w=1080"
 
 function App() {
@@ -133,7 +134,8 @@ function App() {
       <CssBaseline />
       
       <ThemeProvider theme={theme}>
-       
+      < SkeletonTheme  baseColor = " #202020"  highlightColor = " #444" > 
+   
       <AuthContextProvider>
       <Grid container spacing={0}>
       <Grid item xs={2} sx={{ position: 'sticky', top: 0, height: '100vh' }}>
@@ -157,6 +159,8 @@ function App() {
         
       </Grid>
       </AuthContextProvider>
+      </ SkeletonTheme >
+
       </ThemeProvider>
       <CustomPointer mousePosition={mousePosition}/>
 

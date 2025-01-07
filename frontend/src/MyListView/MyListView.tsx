@@ -31,8 +31,6 @@ const getImages = async (userId: string): Promise<SavedImageData[]> => {
         console.error("Failed to get user's image", error);
         return [];
     }
-
-    
 }
 
 
@@ -40,7 +38,6 @@ const MyListView: React.FC = () => {
     const [images, setImages] = useState<ImageData[]>([]);
     const {updateUser, getUser, currentUser} = useContext(AuthContext);
     const navigate = useNavigate();
-   
 
     useEffect(() => {
 
